@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: apps-in-app-helm
+  namespace: argocd
+spec:
+  destination:
+    namespace: apps-in-app
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    helm:
+      values: |-
+        ingress:
+          enabled: true
+          className: nginx
+          hosts:
+            - host: plain-apps-in-app.workshop05.noop.zone
+              paths:
+                - path: /
+                  pathType: ImplementationSpecific
+          tls:
+            - hosts:
+                - plain-apps-in-app.workshop05.noop.zone        
+    path: charts/test
+    repoURL: https://github.com/agepi477/argocd.git
+    targetRevision: main
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true

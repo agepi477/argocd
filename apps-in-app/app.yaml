@@ -6,7 +6,7 @@ metadata:
 spec:
   destination:
     namespace: apps-in-app
-    server: https://kubernetes.default.svc
+    name: aks-apps-cluster
   project: default
   source:
     helm:
